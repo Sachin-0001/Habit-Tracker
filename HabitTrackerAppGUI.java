@@ -75,59 +75,136 @@ class HabitTracker {
         }
         return progress.toString();
     }
+
+    public ArrayList<String> getHabitNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Habit habit : habits) {
+            names.add(habit.getName());
+        }
+        return names;
+    }
 }
 
 public class HabitTrackerAppGUI extends JFrame implements ActionListener {
     private HabitTracker tracker;
     private JTextField habitNameField, frequencyField;
     private JTextArea progressArea;
+    private JComboBox<String> habitComboBox;
 
     public HabitTrackerAppGUI() {
         tracker = new HabitTracker();
 
         setTitle("Habit Tracker");
-        setSize(400, 400);
+        setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        JPanel addPanel = new JPanel();
-        addPanel.setLayout(new FlowLayout());
+        // Title Label
+        JLabel titleLabel = new JLabel("Weekly Habit Tracker", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setOpaque(true);
+        titleLabel.setBackground(new Color(70, 130, 180));
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        add(titleLabel, BorderLayout.NORTH);
+
+        // Input Panel for adding habits
+        JPanel addPanel = new JPanel(new GridBagLayout());
+        addPanel.setBorder(BorderFactory.createTitledBorder("Add New Habit"));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel nameLabel = new JLabel("Habit Name:");
+        nameLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        habitNameField = new JTextField(15);
         
-        addPanel.add(new JLabel("Habit Name:"));
-        habitNameField = new JTextField(10);
-        addPanel.add(habitNameField);
-        
-        addPanel.add(new JLabel("Frequency (days/week):"));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        addPanel.add(nameLabel, gbc);
+        gbc.gridx = 1;
+        addPanel.add(habitNameField, gbc);
+
+        JLabel frequencyLabel = new JLabel("Frequency (days/week):");
+        frequencyLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         frequencyField = new JTextField(5);
-        addPanel.add(frequencyField);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        addPanel.add(frequencyLabel, gbc);
+        gbc.gridx = 1;
+        addPanel.add(frequencyField, gbc);
 
         JButton addButton = new JButton("Add Habit");
+        addButton.setFont(new Font("Arial", Font.BOLD, 14));
+        addButton.setBackground(new Color(34, 139, 34));
+        addButton.setForeground(Color.WHITE);
+        addButton.setFocusPainted(false);
         addButton.addActionListener(this);
         addButton.setActionCommand("AddHabit");
-        addPanel.add(addButton);
 
-        JPanel completePanel = new JPanel();
-        completePanel.setLayout(new FlowLayout());
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        addPanel.add(addButton, gbc);
+
+        add(addPanel, BorderLayout.WEST);
+
+        // Panel for Completing Habit and Viewing Progress
+        JPanel completePanel = new JPanel(new GridBagLayout());
+        completePanel.setBorder(BorderFactory.createTitledBorder("Track Habit Progress"));
+
+        JLabel selectHabitLabel = new JLabel("Select Habit:");
+        selectHabitLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        habitComboBox = new JComboBox<>();
+        habitComboBox.setPreferredSize(new Dimension(150, 25));
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        completePanel.add(selectHabitLabel, gbc);
+        gbc.gridx = 1;
+        completePanel.add(habitComboBox, gbc);
 
         JButton completeButton = new JButton("Complete Day");
+        completeButton.setFont(new Font("Arial", Font.BOLD, 14));
+        completeButton.setBackground(new Color(30, 144, 255));
+        completeButton.setForeground(Color.WHITE);
+        completeButton.setFocusPainted(false);
         completeButton.addActionListener(this);
         completeButton.setActionCommand("CompleteHabit");
-        completePanel.add(completeButton);
 
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        completePanel.add(completeButton, gbc);
+
+        add(completePanel, BorderLayout.CENTER);
+
+        // Progress Display Area
         progressArea = new JTextArea(10, 30);
         progressArea.setEditable(false);
+        progressArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        progressArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         JScrollPane scrollPane = new JScrollPane(progressArea);
+        
+        JPanel progressPanel = new JPanel(new BorderLayout());
+        progressPanel.setBorder(BorderFactory.createTitledBorder("Weekly Progress"));
+        progressPanel.add(scrollPane, BorderLayout.CENTER);
 
+        add(progressPanel, BorderLayout.EAST);
 
+        // Reset Button
         JButton resetButton = new JButton("Reset for New Week");
+        resetButton.setFont(new Font("Arial", Font.BOLD, 14));
+        resetButton.setBackground(new Color(178, 34, 34));
+        resetButton.setForeground(Color.WHITE);
+        resetButton.setFocusPainted(false);
         resetButton.addActionListener(this);
         resetButton.setActionCommand("Reset");
 
-        
-        add(addPanel, BorderLayout.NORTH);
-        add(completePanel, BorderLayout.CENTER);
-        add(scrollPane, BorderLayout.SOUTH);
-        add(resetButton, BorderLayout.PAGE_END);
+        add(resetButton, BorderLayout.SOUTH);
+
         updateProgress();
     }
 
@@ -141,6 +218,7 @@ public class HabitTrackerAppGUI extends JFrame implements ActionListener {
                 try {
                     int frequency = Integer.parseInt(frequencyField.getText());
                     tracker.addHabit(name, frequency);
+                    habitComboBox.addItem(name);
                     habitNameField.setText("");
                     frequencyField.setText("");
                     updateProgress(); 
@@ -150,9 +228,13 @@ public class HabitTrackerAppGUI extends JFrame implements ActionListener {
                 break;
     
             case "CompleteHabit":
-                name = habitNameField.getText();
-                tracker.completeHabit(name);
-                updateProgress();
+                String selectedHabit = (String) habitComboBox.getSelectedItem();
+                if (selectedHabit != null) {
+                    tracker.completeHabit(selectedHabit);
+                    updateProgress();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select a habit to complete.");
+                }
                 break;
     
             case "Reset":
