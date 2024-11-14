@@ -37,10 +37,12 @@ class Habit {
         daysCompleted = 0;
     }
 
+    // The missing getProgress() method
     public String getProgress() {
         return name + ": " + daysCompleted + "/" + frequency + " days completed";
     }
 }
+
 
 class HabitTracker {
     private ArrayList<Habit> habits;
@@ -85,6 +87,7 @@ class HabitTracker {
     }
 }
 
+// Habit Tracker App GUI
 public class HabitTrackerAppGUI extends JFrame implements ActionListener {
     private HabitTracker tracker;
     private JTextField habitNameField, frequencyField;
@@ -118,7 +121,7 @@ public class HabitTrackerAppGUI extends JFrame implements ActionListener {
         JLabel nameLabel = new JLabel("Habit Name:");
         nameLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         habitNameField = new JTextField(15);
-        
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         addPanel.add(nameLabel, gbc);
@@ -187,7 +190,7 @@ public class HabitTrackerAppGUI extends JFrame implements ActionListener {
         progressArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
         progressArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         JScrollPane scrollPane = new JScrollPane(progressArea);
-        
+
         JPanel progressPanel = new JPanel(new BorderLayout());
         progressPanel.setBorder(BorderFactory.createTitledBorder("Weekly Progress"));
         progressPanel.add(scrollPane, BorderLayout.CENTER);
@@ -205,13 +208,24 @@ public class HabitTrackerAppGUI extends JFrame implements ActionListener {
 
         add(resetButton, BorderLayout.SOUTH);
 
+        // Logout Button
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.setFont(new Font("Arial", Font.BOLD, 14));
+        logoutButton.setBackground(new Color(255, 69, 0));
+        logoutButton.setForeground(Color.WHITE);
+        logoutButton.setFocusPainted(false);
+        logoutButton.addActionListener(this);
+        logoutButton.setActionCommand("Logout");
+
+        add(logoutButton, BorderLayout.NORTH); // Place the logout button
+
         updateProgress();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-    
+
         switch (command) {
             case "AddHabit":
                 String name = habitNameField.getText();
@@ -221,12 +235,12 @@ public class HabitTrackerAppGUI extends JFrame implements ActionListener {
                     habitComboBox.addItem(name);
                     habitNameField.setText("");
                     frequencyField.setText("");
-                    updateProgress(); 
+                    updateProgress();
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Please enter a valid number for frequency.");
                 }
                 break;
-    
+
             case "CompleteHabit":
                 String selectedHabit = (String) habitComboBox.getSelectedItem();
                 if (selectedHabit != null) {
@@ -236,14 +250,18 @@ public class HabitTrackerAppGUI extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Please select a habit to complete.");
                 }
                 break;
-    
+
             case "Reset":
                 tracker.resetAllHabits();
                 updateProgress();
                 break;
+
+            case "Logout":
+                this.setVisible(false); // Hide the HabitTrackerAppGUI
+                new LoginPage().setVisible(true); // Show the login page
+                break;
         }
     }
-    
 
     private void updateProgress() {
         progressArea.setText(tracker.getAllProgress());

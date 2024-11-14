@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginPage {
+public class LoginPage extends JFrame {
 
     // Main GUI components
     private JFrame frame;
@@ -127,14 +127,16 @@ public class LoginPage {
     }
     
     // Method to open the Habit Tracker for regular user
-    private void openHabitTracker(String userId) {
-        // Close the login frame
-        frame.setVisible(false);
-        
-        // Create and show the Habit Tracker for the logged-in user
-        HabitTrackerAppGUI habitTrackerAppGUI = new HabitTrackerAppGUI();
-        habitTrackerAppGUI.setVisible(true);  // Assuming your HabitTrackerAppGUI has a method to display the tracker
-    }
+    // Method to open the Habit Tracker for the logged-in user
+private void openHabitTracker(String userId) {
+    // Close the login frame
+    frame.setVisible(false);
+    
+    // Create and show the Habit Tracker for the logged-in user
+    HabitTrackerAppGUI habitTrackerAppGUI = new HabitTrackerAppGUI();
+    habitTrackerAppGUI.setVisible(true);  // Show the Habit Tracker GUI
+}
+
     
     public static void main(String[] args) {
         new LoginPage();

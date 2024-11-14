@@ -80,7 +80,7 @@ public class Adminpage {
         viewUsersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(adminFrame, "Displaying users... (this is a placeholder)");
+                JOptionPane.showMessageDialog(adminFrame, "Displaying users... ");
             }
         });
 
@@ -88,7 +88,7 @@ public class Adminpage {
         manageSettingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(adminFrame, "Managing settings... (this is a placeholder)");
+                JOptionPane.showMessageDialog(adminFrame, "Managing settings...");
             }
         });
 
