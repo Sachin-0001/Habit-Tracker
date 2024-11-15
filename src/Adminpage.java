@@ -16,12 +16,12 @@ public class Adminpage {
         adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         adminFrame.setSize(600, 400);
         adminFrame.setLayout(new BorderLayout());
-        adminFrame.setLocationRelativeTo(null); // Center the frame
+        adminFrame.setLocationRelativeTo(null);
 
         // Panel to hold content
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
-        panel.setBackground(new Color(230, 230, 250)); // Light lavender background
+        panel.setBackground(new Color(230, 230, 250));
         GridBagConstraints gbc = new GridBagConstraints();
 
         // Set padding for each component
@@ -30,7 +30,7 @@ public class Adminpage {
         // Welcome label
         JLabel welcomeLabel = new JLabel("Welcome Admin!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        welcomeLabel.setForeground(new Color(70, 130, 180)); // Set a nice color
+        welcomeLabel.setForeground(new Color(70, 130, 180));
 
         // Set gridbag constraints for the welcome label
         gbc.gridx = 0;
@@ -96,9 +96,8 @@ public class Adminpage {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Go back to login page (close admin page and show login page)
-                adminFrame.setVisible(false);  // Hide the admin page
-                new LoginPage();  // Show login page again
+                adminFrame.setVisible(false); 
+                new LoginPage(); 
             }
         });
 

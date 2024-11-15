@@ -44,7 +44,7 @@ public class LoginPage extends JFrame {
         // Login button
         loginButton = new JButton("Login");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
-        loginButton.setBackground(new Color(70, 130, 180)); // Set button color
+        loginButton.setBackground(new Color(70, 130, 180));
         loginButton.setForeground(Color.WHITE);
         loginButton.setFocusPainted(false);
         
@@ -89,16 +89,15 @@ public class LoginPage extends JFrame {
                 String username = usernameField.getText();
                 char[] password = passwordField.getPassword();
                 
-                // Validate credentials (replace this with your actual validation logic)
+                
                 if (validateLogin(username, password)) {
-                    // Assuming the user ID is the username (you can modify this logic)
+        
                     String userId = username; 
 
-                    // Check if the user is an admin or a regular user
                     if ("admin".equals(username)) {
-                        openAdminPage();  // Open Admin page if username is "admin"
+                        openAdminPage(); 
                     } else {
-                        openHabitTracker(userId);  // Open Habit Tracker for regular user
+                        openHabitTracker(userId);
                     }
                 } else {
                     errorLabel.setText("Invalid username or password.");
@@ -110,20 +109,17 @@ public class LoginPage extends JFrame {
         frame.setVisible(true);
     }
     
-    // Dummy method for validating login (replace with your actual logic)
     private boolean validateLogin(String username, char[] password) {
-        // Simple validation logic: "admin" and "user" for username, "password" for password
+    
         return ("admin".equals(username) || "user".equals(username)) && "password".equals(new String(password));
     }
     
     // Method to open the Admin page
     private void openAdminPage() {
-        // Close the login frame
         frame.setVisible(false);
         
-        // Create and show the Admin page
         Adminpage adminPage = new Adminpage();
-        adminPage.showAdminPage();  // Assuming your Adminpage has a method to display the page
+        adminPage.showAdminPage(); 
     }
     
     // Method to open the Habit Tracker for regular user
@@ -134,7 +130,7 @@ private void openHabitTracker(String userId) {
     
     // Create and show the Habit Tracker for the logged-in user
     HabitTrackerAppGUI habitTrackerAppGUI = new HabitTrackerAppGUI();
-    habitTrackerAppGUI.setVisible(true);  // Show the Habit Tracker GUI
+    habitTrackerAppGUI.setVisible(true);
 }
 
     

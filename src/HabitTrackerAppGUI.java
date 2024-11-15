@@ -37,7 +37,6 @@ class Habit {
         daysCompleted = 0;
     }
 
-    // The missing getProgress() method
     public String getProgress() {
         return name + ": " + daysCompleted + "/" + frequency + " days completed";
     }
@@ -87,7 +86,7 @@ class HabitTracker {
     }
 }
 
-// Habit Tracker App GUI
+
 public class HabitTrackerAppGUI extends JFrame implements ActionListener {
     private HabitTracker tracker;
     private JTextField habitNameField, frequencyField;
@@ -153,7 +152,7 @@ public class HabitTrackerAppGUI extends JFrame implements ActionListener {
 
         add(addPanel, BorderLayout.WEST);
 
-        // Panel for Completing Habit and Viewing Progress
+        
         JPanel completePanel = new JPanel(new GridBagLayout());
         completePanel.setBorder(BorderFactory.createTitledBorder("Track Habit Progress"));
 
