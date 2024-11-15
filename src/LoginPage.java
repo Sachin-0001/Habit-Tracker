@@ -18,7 +18,7 @@ public class LoginPage extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
         frame.setLayout(new BorderLayout());
-        frame.setLocationRelativeTo(null); // Center the frame
+        frame.setLocationRelativeTo(null);
         
         // Panel for the login form
         JPanel panel = new JPanel();
